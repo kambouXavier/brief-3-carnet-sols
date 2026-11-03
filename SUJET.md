@@ -1,7 +1,7 @@
 # Brief 3 — Carnet d'observation des sols
 
 **Examen final de sélection · travail individuel.** Quatre jours de travail, organisés comme vous le voulez. Livraison à l'heure fixée par les coachs, à la fin du quatrième jour ; soutenance individuelle le lendemain.
-
+ 
 ## Le besoin
 
 L'équipe de la ferme pédagogique relève des points de sol : texture, pH, état d'humidité. Elle veut retrouver ces relevés et repérer les valeurs à discuter avec l'agronome. Vous êtes assistant terrain Agritech : vous construisez ce carnet en JavaScript, avec Node.js, **sans produire de diagnostic de fertilisation**.
