@@ -10,8 +10,10 @@ return observationParcelle
 
 // Renvoie un NOUVEAU tableau avec les observations de cette texture (éventuellement vide).
 export function filtrerParTexture(observations, texture) {
-  throw new Error('TODO : coder filtrerParTexture dans src/recherche.js');
+  const observationTexture = observations.filter(observation => observation.texture === texture);
+return observationTexture
 }
+
 
 // Renvoie une COPIE triée par pH croissant, avec un comparateur numérique.
 // Le tableau reçu ne doit pas changer d'ordre. Deux observations de même pH gardent leur ordre d'origine.
