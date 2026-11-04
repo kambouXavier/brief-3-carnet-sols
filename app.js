@@ -119,6 +119,21 @@ async function rechercher(observations) {
   }
 }
 
+// Choix 4 : trier par pH (le carnet d'origine ne change pas d'ordre).
+async function trier(observations) {
+  console.log('--- Trier ---');
+  console.log('1. Par pH croissant');
+  const sousChoix = await demander('Votre choix : ');
+  if (sousChoix === null) return;
+
+  if (sousChoix === '1') {
+    console.log(listerObservations(trierParPh(observations)));
+  } else {
+    console.log('Choix inconnu : retour au menu.');
+  }
+}
+
+
 
 
 async function main() {
