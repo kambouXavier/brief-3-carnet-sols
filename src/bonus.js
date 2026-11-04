@@ -25,8 +25,7 @@ else{
   const observationsSupprimees = observations.splice(position, 1);
 
   return observationsSupprimees[0];
-}
-}
+}}
 
 // Modifie UN champ d'une observation. La nouvelle valeur arrive sous forme de TEXTE et suit
 // les mêmes règles qu'à l'ajout. Renvoie les erreurs : [] si la modification est faite ;
@@ -34,8 +33,31 @@ else{
 // Erreurs : identifiant introuvable · champ 'id' (non modifiable) · champ absent de CHAMPS_MODIFIABLES
 //           · valeur refusée par les règles de l'ajout.
 export function modifierObservation(observations, id, champ, valeur) {
-  throw new Error('TODO Bonus : coder modifierObservation dans src/bonus.js');
+const erreurs = [];
+const observation = observations.find((observation) => observation.id === id);
+if (!observation) {
+  erreurs.push("identifiant introuvable");
 }
+if (champ === 'id') {
+  erreurs.push("champ 'id' (non modifiable)");
+}
+if (!CHAMPS_MODIFIABLES.includes(champ)) {
+  erreurs.push("champ absent de CHAMPS_MODIFIABLES");
+}
+let valeurTraitee = valeur;
+
+if (champ === 'pH') {
+  valeurTraitee = versNombre(valeur);
+  if (isNaN(valeurTraitee) || valeurTraitee < 0 || valeurTraitee > 14 )
+    erreurs.push("valeur du pH doit etre compris entre 0 et 14");
+  }
+  if(erreurs.length > 0) {
+    return erreurs;
+  }
+  observation [ champ] = valeurTraitee;
+  return [];
+}
+
 
 // Renvoie une COPIE triée par pH décroissant. Le tableau reçu ne doit pas changer d'ordre.
 export function trierParPhDecroissant(observations) {
