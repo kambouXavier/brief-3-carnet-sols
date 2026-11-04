@@ -12,7 +12,20 @@ export const CHAMPS_MODIFIABLES = ['parcelle', 'texture', 'pH', 'etatHumidite'];
 // Supprime du carnet l'observation qui a cet identifiant.
 // Renvoie l'observation supprimée, ou undefined si elle n'existe pas (le carnet ne change pas).
 export function supprimerObservation(observations, id) {
-  throw new Error('TODO Bonus : coder supprimerObservation dans src/bonus.js');
+const position = observations.findIndex(
+    (observation) => observation.id === id
+  );
+
+  if (position === -1) {
+    return undefined;
+  }
+
+else{
+
+  const observationsSupprimees = observations.splice(position, 1);
+
+  return observationsSupprimees[0];
+}
 }
 
 // Modifie UN champ d'une observation. La nouvelle valeur arrive sous forme de TEXTE et suit
