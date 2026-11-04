@@ -133,6 +133,34 @@ async function trier(observations) {
   }
 }
 
+// Choix 5 : synthèse.
+function synthese(observations) {
+  console.log('--- Synthèse des observations ---');
+  console.log(`Nombre d'observations : ${observations.length}`);
+
+  const bornes = phMinMax(observations);
+  if (bornes === null) {
+    console.log('pH minimum et maximum : aucune donnée');
+  } else {
+    console.log(`pH minimum : ${bornes.min} · pH maximum : ${bornes.max}`);
+  }
+
+  console.log('Observations par texture :');
+  for (const [texture, nombre] of Object.entries(compterParTexture(observations))) {
+    console.log(`  ${texture} : ${nombre}`);
+  }
+
+  const aDiscuter = pointsADiscuter(observations, SEUIL_PH_A_DISCUTER);
+  console.log(`Points à discuter avec le coach (pH < ${SEUIL_PH_A_DISCUTER}) : ${aDiscuter.length}`);
+  for (const observation of aDiscuter) {
+    console.log(`  ${formaterObservation(observation)}`);
+  }
+
+  console.log('Rappels : le pH est sans unité. Aucune moyenne de pH n\'est calculée (échelle logarithmique).');
+  console.log('Ces points ne sont pas un diagnostic de fertilisation : ils servent à préparer l\'échange avec le coach.');
+}
+
+
 
 
 
