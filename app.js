@@ -7,6 +7,8 @@ import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { HUMIDITES, TEXTURES, ajouterObservation, formaterObservation, listerObservations, trouverParId } from './src/registre.js';
 import { filtrerParParcelle, filtrerParTexture, trierParPh } from './src/recherche.js';
 import { SEUIL_PH_A_DISCUTER, compterParTexture, phMinMax, pointsADiscuter } from './src/synthese.js';
+import { supprimerObservation,modifierObservation,trierParPhDecroissant,textureLaPlusFrequente, } from './src/bonus.js';
+
 
 const FICHIER_DONNEES = 'donnees/observations.json';
 
@@ -27,6 +29,8 @@ function afficherMenu() {
   console.log('3. Rechercher (point, parcelle, texture)');
   console.log('4. Trier par pH');
   console.log('5. Synthèse des observations');
+  console.log('6. Supprimer une observation');
+  console.log('7. Modifier une observation');
   console.log('0. Quitter');
 }
 
@@ -120,14 +124,19 @@ async function rechercher(observations) {
 }
 
 // Choix 4 : trier par pH (le carnet d'origine ne change pas d'ordre).
+
 async function trier(observations) {
   console.log('--- Trier ---');
   console.log('1. Par pH croissant');
+  console.log('2. Par pH décroissant');
+
   const sousChoix = await demander('Votre choix : ');
   if (sousChoix === null) return;
 
   if (sousChoix === '1') {
     console.log(listerObservations(trierParPh(observations)));
+  } else if (sousChoix === '2') {
+    console.log(listerObservations(trierParPhDecroissant(observations)));
   } else {
     console.log('Choix inconnu : retour au menu.');
   }
@@ -135,6 +144,17 @@ async function trier(observations) {
 
 // Choix 5 : synthèse.
 function synthese(observations) {
+
+  const textureFrequent = textureLaPlusFrequente(observations);
+
+if (textureFrequent === null) {
+  console.log('Texture la plus fréquente : aucune observation');
+} else {
+  console.log(
+    `Texture la plus fréquente : ${textureFrequent.texture} (${textureFrequent.nombre} observation(s))`
+  );
+}
+
   console.log('--- Synthèse des observations ---');
   console.log(`Nombre d'observations : ${observations.length}`);
 
@@ -158,6 +178,77 @@ function synthese(observations) {
 
   console.log('Rappels : le pH est sans unité. Aucune moyenne de pH n\'est calculée (échelle logarithmique).');
   console.log('Ces points ne sont pas un diagnostic de fertilisation : ils servent à préparer l\'échange avec le coach.');
+}
+
+// Choix 6 : demande l'identifiant, supprime l'observation et enregistre le carnet.
+async function supprimer(observations) {
+  const saisie = await demander('Identifiant du point à supprimer : ');
+  if (saisie === null) return;
+
+  const id = saisie.trim().toUpperCase();
+  const supprimee = supprimerObservation(observations, id);
+
+  if (supprimee === undefined) {
+    console.log(`Observation ${id} introuvable. Le carnet n'a pas été modifié.`);
+    return;
+  }
+
+  await enregistrerJson(FICHIER_DONNEES, observations);
+  console.log(`Observation ${id} supprimée et carnet enregistré.`);
+}
+
+// Choix 7 : demande l'identifiant, le champ et sa nouvelle valeur.
+async function modifier(observations) {
+  const saisieId = await demander('Identifiant du point à modifier : ');
+  if (saisieId === null) return;
+
+  console.log('Quel champ veux-tu modifier ?');
+  console.log('1. Parcelle');
+  console.log('2. Texture');
+  console.log('3. pH');
+  console.log("4. État d'humidité");
+
+  const choixChamp = await demander('Votre choix : ');
+  if (choixChamp === null) return;
+
+  const champs = {
+    '1': 'parcelle',
+    '2': 'texture',
+    '3': 'pH',
+    '4': 'etatHumidite',
+  };
+
+  const champ = champs[choixChamp];
+
+  if (champ === undefined) {
+    console.log('Choix inconnu : aucune modification effectuée.');
+    return;
+  }
+
+  const valeur = await demander(`Nouvelle valeur pour ${champ} : `);
+  if (valeur === null) return;
+
+  const id = saisieId.trim().toUpperCase();
+  let nouvelleValeur = valeur.trim();
+
+  if (champ === 'parcelle') {
+    nouvelleValeur = nouvelleValeur.toUpperCase();
+  } else if (champ === 'texture' || champ === 'etatHumidite') {
+    nouvelleValeur = nouvelleValeur.toLowerCase();
+  }
+
+  const erreurs = modifierObservation(observations, id, champ, nouvelleValeur);
+
+  if (erreurs.length > 0) {
+    console.log('Modification refusée :');
+    for (const erreur of erreurs) {
+      console.log(`  - ${erreur}`);
+    }
+    return;
+  }
+
+  await enregistrerJson(FICHIER_DONNEES, observations);
+  console.log(`Observation ${id} modifiée et carnet enregistré.`);
 }
 
 
@@ -203,6 +294,12 @@ async function main() {
           break;
         case '5':
           synthese(observations);
+          break;
+        case '6':
+          await supprimer(observations);
+          break;
+        case '7':
+          await modifier(observations);
           break;
         case '0':
           console.log('Au revoir !');
