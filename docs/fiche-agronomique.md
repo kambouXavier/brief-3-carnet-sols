@@ -4,18 +4,20 @@
 
 | Point | Parcelle | Texture | pH | Humidité | Le constat, en une phrase |
 | --- | --- | --- | --- | --- | --- |
-| S04 | P2 | sableux | 4,8 | sec | Le relevé S04 indique une texture sableuse, un état sec et un pH de 4,8. |
-| S02 | P1 | limoneux | 6,1 | intermédiaire | Le relevé S02 indique une texture limoneuse, une humidité intermédiaire et un pH de 6,1. |
+| S01 | P1 | sableux | 5,2 | sec | Le point S01 présente un sol sableux, sec, avec un pH de 5,2. |
+| S02 | P2 | limoneux | 6,1 | intermédiaire | Le point S02 présente un sol limoneux, intermédiaire, avec un pH de 6,1. |
 
 **Un lien possible avec l'eau ou les plantes**, pour l'une des deux :
 
-- constat (ce que dit le carnet) : Le relevé S04 indique une texture sableuse et un état sec.
+- **Constat (ce que dit le carnet)** : Le point S01 présente un point sableux, sec, avec un pH de 5,2.
+- **Hypothèse (au conditionnel) à commenter et vérifier** : Le sol sableux pourrait conditionner une infiltration rapide de l’eau dans le sol. Cette hypothèse pourrait être vérifiée en observant la vitesse d’infiltration de l’eau sur cette parcelle.
 
-- hypothèse (au conditionnel) et comment la vérifier : La texture sableuse pourrait être liée à l’état sec observé. Pour vérifier cette hypothèse, il faudrait répéter les mesures d’humidité sur plusieurs points et observer les plantes. Ce relevé seul ne permet pas d’établir une cause.
 
+**Deux limites du carnet** (une seule observation par point, classes d'exercice, pas de moment du relevé, seuil de 5,5 simple repère…) :
+ 
+- Les états d’humidité sont classés en trois catégories (sec, intermédiaire et humide) et ne donnent pas une mesure précise de la quantité d’eau présente dans le sol.
+- Le carnet ne donne pas de recommandations sur les engrais à utiliser, car son rôle est uniquement d’enregistrer et de consulter les observations du sol.
 
-**Deux limites du carnet** (une seule observation par point, classes d'exercice, pas de moment du relevé, seuil de 5,5 simple repère…) : 
-1-Le carnet ne précise pas la profondeur du relevé.
-2-Le carnet ne fournit pas d’observation sur les plantes
+Sources : SUJET.md et données enregistrées dans `donnees/observations.json`
 
-Sources : `SUJET.md` , `dictionnaire-donnees.md` et `donnees/observations.json` · Relu par le coach le : à compléter après la relecture du coach .
+Relu par le coach le :
