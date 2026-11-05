@@ -53,11 +53,32 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
 
-**Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
+| Ajout d'une observation valide | L'observation est acceptée et enregistrée | Observation ajoutée avec succès. | Koffi Boagr VIEGNEKOU |
+| Conservation après redémarrage | L'observation ajoutée reste présente après le redémarrage | À vérifier | Koffi Boagr VIEGNEKOU |
+| Ajout avec pH = 14,1 | La saisie est refusée | À vérifier | Koffi Boagr VIEGNEKOU |
+| Recherche S99 | Aucun résultat trouvé | Choix inconnu : retour au menu. Test de recherche à refaire. | Koffi Boagr VIEGNEKOU |
+| Tri par pH | Les observations sont classées selon le pH croissant | Observations classées par pH dans l'ordre croissant. | Koffi Boagr VIEGNEKOU |
+| Synthèse | Les valeurs calculées correspondent aux calculs manuels | pH minimum : 4,8 ; pH maximum : 7,6. | Koffi Boagr VIEGNEKOU |
+| Choix inconnu | Le programme refuse le choix et continue | Choix inconnu : « 99 ». Tapez un chiffre du menu. | Koffi Boagr VIEGNEKOU |
+
+
+## 2. Vérification des règles de validation
+
+| Cas vérifié | Calcul ou règle manuelle | Résultat attendu | Résultat obtenu |
+|---|---|---|---|
+| pH = 14 | Valeur comprise entre 0 et 14 | Accepté | À vérifier |
+| pH = 14,1 | Valeur supérieure à 14 | Refusé | À vérifier |
+| pH = -1 | Valeur inférieure à 0 | Refusé | À vérifier |
+| pH vide | Absence de valeur numérique | Refusé | À vérifier |
+| Humidité invalide | Valeur différente de sec, intermédiaire ou humide | Refusé | À vérifier |
+
+
+**Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : 
+
+- Le dépôt est correctement cloné.
+- L'application démarre sans erreur.
+- Le menu principal s'affiche.
+- Les tests s'exécutent correctement.
+
+**Testeur :** Koffi Boagr VIEGNEKOU
